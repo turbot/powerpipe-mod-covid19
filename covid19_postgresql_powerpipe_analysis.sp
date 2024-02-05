@@ -36,20 +36,8 @@ dashboard "covid-19" {
         EOQ
     }
 
-
     table {
-      sql  = <<EOQ
-        select 
-          to_char(sum(new_deaths), '999,999,999,999') as deaths,
-          to_char(max(population), '999,999,999,999') as population,
-          to_char(max(people_vaccinated), '999,999,999,999') as people_vaccinated,
-          round( (max(people_vaccinated)::numeric / max(population)::numeric), 1) * 100 as "% vaccinated",
-          to_char(max(people_fully_vaccinated), '999,999,999,999') as people_fully_vaccinated,
-          round( (max(people_fully_vaccinated)::numeric / max(population)::numeric), 1) * 100 as "% fully vaccinated"
-        from covid_data
-        where iso_code = $1
-        group by iso_code, population
-      EOQ
+      query = query.by_iso_code
       args = [self.input.locations.value]
     }
   }
@@ -79,22 +67,11 @@ dashboard "covid-19" {
      EOQ
     }
 
-
     table {
-      sql  = <<EOQ
-          select 
-            to_char(sum(new_deaths), '999,999,999,999') as deaths,
-            to_char(max(population), '999,999,999,999') as population,
-            to_char(max(people_vaccinated), '999,999,999,999') as people_vaccinated,
-            round( (max(people_vaccinated)::numeric / max(population)::numeric), 1) * 100 as "% vaccinated",
-            to_char(max(people_fully_vaccinated), '999,999,999,999') as people_fully_vaccinated,
-            round( (max(people_fully_vaccinated)::numeric / max(population)::numeric), 1) * 100 as "% fully vaccinated"
-          from covid_data
-          where iso_code = $1
-          group by iso_code, population
-        EOQ
+      query = query.by_iso_code
       args = [self.input.continents.value]
     }
+
   }
 
   container {
@@ -123,23 +100,31 @@ dashboard "covid-19" {
     }
 
     table {
-      sql  = <<EOQ
-        select 
-          to_char(sum(new_deaths), '999,999,999,999') as deaths,
-          to_char(max(population), '999,999,999,999') as population,
-          to_char(max(people_vaccinated), '999,999,999,999') as people_vaccinated,
-          round( (max(people_vaccinated)::numeric / max(population)::numeric), 1) * 100 as "% vaccinated",
-          to_char(max(people_fully_vaccinated), '999,999,999,999') as people_fully_vaccinated,
-          round( (max(people_fully_vaccinated)::numeric / max(population)::numeric), 1) * 100 as "% fully vaccinated"
-        from covid_data
-        where iso_code = $1
-        group by iso_code, population
-        EOQ
+      query = query.by_iso_code
       args = [self.input.income.value]
     }
+
   }
 
 }
+
+query "by_iso_code" {
+  sql = <<EOQ
+    select 
+      to_char(sum(new_deaths), '999,999,999,999') as deaths,
+      to_char(max(population), '999,999,999,999') as population,
+      round(sum(new_deaths)::numeric / max(population)::numeric * 100, 2) as "%",
+      to_char(max(people_vaccinated), '999,999,999,999') as vaccinated,
+      round((max(people_vaccinated)::numeric / max(population)::numeric) * 100, 2) as "%",
+      to_char(max(people_fully_vaccinated), '999,999,999,999') as fully_vaccinated,
+      round((max(people_fully_vaccinated)::numeric / max(population)::numeric) * 100, 2) as "%"
+    from covid_data
+    where iso_code = 'USA'
+  EOQ
+}
+
+
+
 
 
 
