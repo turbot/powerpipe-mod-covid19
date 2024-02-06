@@ -56,7 +56,7 @@ dashboard "covid-19" {
 
     chart {
       title = "Global deaths by month"
-      width = 8
+      width = 9
       type = "column"
       sql = <<EOQ
         with data as (
@@ -82,7 +82,7 @@ dashboard "covid-19" {
     width = 4
 
     input "locations" {
-      width = 4
+      width = 6
       title = "locations"
       sql   = <<EOQ
         with data as (
@@ -103,6 +103,8 @@ dashboard "covid-19" {
     }
 
     table {
+      width = 8
+      type = "line"
       query = query.by_iso_code
       args = [self.input.locations.value]
     }
@@ -114,7 +116,7 @@ dashboard "covid-19" {
     width = 4
 
     input "continents" {
-      width = 4
+      width = 6
       title = "continents"
       sql   = <<EOQ
           with data as (
@@ -136,6 +138,8 @@ dashboard "covid-19" {
     }
 
     table {
+      width = 8
+      type = "line"
       query = query.by_iso_code
       args = [self.input.continents.value]
     }
@@ -146,7 +150,7 @@ dashboard "covid-19" {
     width = 4
 
     input "income" {
-      width = 4
+      width = 6
       title = "income"
       sql   = <<EOQ
         with data as (
@@ -168,6 +172,8 @@ dashboard "covid-19" {
     }
 
     table {
+      width = 8
+      type = "line"
       query = query.by_iso_code
       args = [self.input.income.value]
     }
@@ -181,11 +187,11 @@ query "by_iso_code" {
     select 
       to_char(sum(new_deaths), '999,999,999,999') as deaths,
       to_char(max(population), '999,999,999,999') as population,
-      round(sum(new_deaths)::numeric / max(population)::numeric * 100, 2) as "% d",
+      round(sum(new_deaths)::numeric / max(population)::numeric * 100, 2) as "deaths as % of population",
       to_char(max(people_vaccinated), '999,999,999,999') as vaccinated,
-      round((max(people_vaccinated)::numeric / max(population)::numeric) * 100, 2) as "% v",
+      round((max(people_vaccinated)::numeric / max(population)::numeric) * 100, 2) as "people vaccinated as % of population",
       to_char(max(people_fully_vaccinated), '999,999,999,999') as fully_vaccinated,
-      round((max(people_fully_vaccinated)::numeric / max(population)::numeric) * 100, 2) as "% fv"
+      round((max(people_fully_vaccinated)::numeric / max(population)::numeric) * 100, 2) as "people fully vaccinated as % of population"
     from covid_data
     where iso_code = $1
   EOQ
