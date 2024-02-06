@@ -40,8 +40,8 @@ dashboard "covid-19" {
     width = 12
     chart {
       title = "Global deaths by month"
-      type = "column"
-      sql = <<EOQ
+      type  = "column"
+      sql   = <<EOQ
         with data as (
           select
             to_char(date, 'YYYY-MM') as year_month,
@@ -65,13 +65,13 @@ dashboard "covid-19" {
   container {
 
     title = "Deaths as a % of population"
-    
+
     container {
       chart {
         width = 4
         title = "Deaths as a % of population by region"
-        type = "donut"
-        sql = <<EOQ
+        type  = "donut"
+        sql   = <<EOQ
           select
             location,
             round(sum(new_deaths)::numeric / max(population)::numeric * 100, 2) as "pct"
@@ -85,8 +85,8 @@ dashboard "covid-19" {
       chart {
         width = 4
         title = "Deaths as a % of population by continent"
-        type = "donut"
-        sql = <<EOQ
+        type  = "donut"
+        sql   = <<EOQ
           select
             location,
             round(sum(new_deaths)::numeric / max(population)::numeric * 100, 2) as "pct"
@@ -100,8 +100,8 @@ dashboard "covid-19" {
       chart {
         width = 4
         title = "Deaths as a % of population by income"
-        type = "donut"
-        sql = <<EOQ
+        type  = "donut"
+        sql   = <<EOQ
           select
             location,
             round(sum(new_deaths)::numeric / max(population)::numeric * 100, 2) as "pct"
@@ -117,7 +117,7 @@ dashboard "covid-19" {
         value = "Note: small values for Africa/Asia and Low income/Lower middle income likely reflect underreporting."
       }
 
-      
+
     }
   }
 
@@ -147,12 +147,12 @@ dashboard "covid-19" {
 
     table {
       width = 8
-      type = "line"
+      type  = "line"
       query = query.by_iso_code
-      args = [self.input.locations.value]
+      args  = [self.input.locations.value]
     }
 
-    
+
   }
 
   container {
@@ -161,7 +161,7 @@ dashboard "covid-19" {
     input "continents" {
       width = 6
       title = "continents"
-      sql = <<EOQ
+      sql   = <<EOQ
           with data as (
             select distinct on (iso_code)
               iso_code,
@@ -182,9 +182,9 @@ dashboard "covid-19" {
 
     table {
       width = 8
-      type = "line"
+      type  = "line"
       query = query.by_iso_code
-      args = [self.input.continents.value]
+      args  = [self.input.continents.value]
     }
 
   }
@@ -216,9 +216,9 @@ dashboard "covid-19" {
 
     table {
       width = 8
-      type = "line"
+      type  = "line"
       query = query.by_iso_code
-      args = [self.input.income.value]
+      args  = [self.input.income.value]
     }
 
     table {
@@ -241,7 +241,33 @@ dashboard "covid-19" {
       EOQ
     }
 
+  }
 
+  container {
+    title = "About the data"
+    
+    table "columns" {
+      width = 4
+      title = "All available columns"
+      sql   = <<EOQ
+        select column_name
+        from information_schema.columns
+        where table_name  = 'covid_data'
+        order by column_name
+      EOQ
+    }
+
+    table {
+      width = 4
+      title = "Most recent data by location, oldest to newest"
+      sql = <<EOQ
+        select to_char(max(date), 'YYYY-MM-DD') as date, location
+        from covid_data 
+        group by iso_code, location
+        order by date, iso_code
+      EOQ
+
+    }
 
   }
 
@@ -261,6 +287,8 @@ query "by_iso_code" {
     where iso_code = $1
   EOQ
 }
+
+
 
 
 
