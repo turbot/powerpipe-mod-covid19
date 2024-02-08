@@ -229,7 +229,7 @@ dashboard "covid-19" {
 
         table {
           sql = <<EOQ
-            select to_char(max(date), 'YYYY-MM-DD') as date, location
+            select to_char(max(date), 'YYYY-MM-DD') as date, location || '( ' || iso_code || ')' as location
             from covid_data 
             group by iso_code, location
             order by date, iso_code
