@@ -216,6 +216,10 @@ dashboard "covid-19" {
     container {
       width = 4
 
+      input "locations" {
+        base = input.locations
+      }
+
       input "columns" {
         base = input.columns
       }
