@@ -111,3 +111,9 @@ powerpipe server --database postgresql://username:password@localhost:5432/mydata
 (If you're running Postgres as a trusted user, e.g. `postgres`, you can omit `:password`)
 
 Then visit localhost:9194 in a browser.
+
+## Other visualizations based on this data
+
+[https://ourworldindata.org/covid-vaccinations](https://ourworldindata.org/covid-vaccinations)
+
+[https://ig.ft.com/coronavirus-chart/](https://ig.ft.com/coronavirus-chart/)
