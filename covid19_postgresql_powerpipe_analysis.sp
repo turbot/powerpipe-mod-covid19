@@ -3,6 +3,9 @@ dashboard "covid-19" {
   title = "COVID-19 data from https://covid.ourworldindata.org/data/owid-covid-data.csv"
 
   container {
+  }
+
+  container {
 
     card {
       width = 2
@@ -245,6 +248,12 @@ dashboard "covid-19" {
 
   container {
     title = "About the data"
+
+    table "locations" {
+      width = 4
+      title = "Locations"
+      query = query.locations
+    }
     
     table "columns" {
       width = 4
@@ -257,20 +266,39 @@ dashboard "covid-19" {
       EOQ
     }
 
-    table {
+    container {
       width = 4
-      title = "Most recent data by location, oldest to newest"
-      sql = <<EOQ
-        select to_char(max(date), 'YYYY-MM-DD') as date, location
-        from covid_data 
-        group by iso_code, location
-        order by date, iso_code
-      EOQ
+      input "columns" {
+        sql   = <<EOQ
+          select column_name as label, column_name as value
+          from information_schema.columns
+          where table_name  = 'covid_data'
+          order by column_name
+        EOQ
+      }
 
+      table {
+        title = "Most recent data by location, old to new"
+        sql = <<EOQ
+          select to_char(max(date), 'YYYY-MM-DD') as date, location
+          from covid_data 
+          group by iso_code, location
+          order by date, iso_code
+        EOQ
+      }
     }
 
   }
 
+}
+
+query  "locations" {
+  sql = <<EOQ
+    select distinct continent, location, iso_code
+    from covid_data
+    order by iso_code
+
+  EOQ
 }
 
 query "by_iso_code" {
@@ -287,11 +315,3 @@ query "by_iso_code" {
     where iso_code = $1
   EOQ
 }
-
-
-
-
-
-
-
-
