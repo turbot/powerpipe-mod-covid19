@@ -100,6 +100,11 @@ postgres=# \copy covid_data FROM '/path/to/repo/owid-covid-data.csv' DELIMITER '
 COPY 373434
 ```
 
+```
+create index iso_code on covid_data(iso_code);
+```
+
+
 ## Usage
 
 Run the dashboard and specify the DB connection string:

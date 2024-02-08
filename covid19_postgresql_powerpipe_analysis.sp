@@ -224,25 +224,18 @@ dashboard "covid-19" {
    
 
     container {
-      title = "Data age by location and column"
-      width = 5
+      title = "Most recent data by location, oldest to newest"
+      width = 4
 
-      input "locations2" {
-        base = input.locations
-      }
+        table {
+          sql = <<EOQ
+            select to_char(max(date), 'YYYY-MM-DD') as date, location
+            from covid_data 
+            group by iso_code, location
+            order by date, iso_code
+          EOQ
 
-      input "columns" {
-        base = input.columns
-      }
-
-      table {
-        sql = <<EOQ
-          select to_char(max(date), 'YYYY-MM-DD') as date, location
-          from covid_data 
-          group by iso_code, location
-          order by date, iso_code
-        EOQ
-      }
+        }
     }
 
   }
