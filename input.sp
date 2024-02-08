@@ -1,6 +1,5 @@
 input "continents" {
   width = 6
-  title = "continents"
   sql   = <<EOQ
       with data as (
         select distinct on (iso_code)
@@ -22,7 +21,6 @@ input "continents" {
 
 input "locations" {
   width = 6
-  title = "locations"
   sql   = <<EOQ
     with data as (
       select distinct on (iso_code)
@@ -43,7 +41,6 @@ input "locations" {
 
 input "income" {
   width = 6
-  title = "income"
   sql   = <<EOQ
     with data as (
       select distinct on (iso_code)

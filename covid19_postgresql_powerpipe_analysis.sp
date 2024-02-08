@@ -125,6 +125,7 @@ dashboard "covid-19" {
   }
 
   container {
+    title = "Locations"
     width = 4
 
     input "locations" {
@@ -142,6 +143,7 @@ dashboard "covid-19" {
   }
 
   container {
+    title = "Continents"
     width = 4
 
     input "continents" {
@@ -158,6 +160,7 @@ dashboard "covid-19" {
   }
 
   container {
+    title = "Income"
     width = 4
 
     input "income" {
@@ -196,25 +199,33 @@ dashboard "covid-19" {
   container {
     title = "About the data"
 
-    table "locations" {
+    container {
       width = 4
       title = "Locations"
-      query = query.locations
-    }
-    
-    table "columns" {
-      width = 4
-      title = "All available columns"
-      sql   = <<EOQ
-        select column_name
-        from information_schema.columns
-        where table_name  = 'covid_data'
-        order by column_name
-      EOQ
+      table "locations" {
+        query = query.locations
+      }
     }
 
     container {
-      width = 4
+      width = 3
+      title = "All available columns"
+
+      table "columns" {
+        sql   = <<EOQ
+          select column_name
+          from information_schema.columns
+          where table_name  = 'covid_data'
+          order by column_name
+        EOQ
+      }
+
+    }
+   
+
+    container {
+      title = "Data age by location and column"
+      width = 5
 
       input "locations2" {
         base = input.locations
@@ -225,7 +236,6 @@ dashboard "covid-19" {
       }
 
       table {
-        title = "Most recent data by location, old to new"
         sql = <<EOQ
           select to_char(max(date), 'YYYY-MM-DD') as date, location
           from covid_data 
