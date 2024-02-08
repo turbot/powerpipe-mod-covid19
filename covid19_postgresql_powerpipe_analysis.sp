@@ -72,7 +72,7 @@ dashboard "covid-19" {
     container {
       chart {
         width = 4
-        title = "Deaths as a % of population by location"
+        title = "Deaths as a % of population by continent"
         type  = "donut"
         sql   = <<EOQ
           select
@@ -87,7 +87,7 @@ dashboard "covid-19" {
 
       chart {
         width = 4
-        title = "Deaths as a % of population by continent"
+        title = "Deaths as a % of population by location"
         type  = "donut"
         sql   = <<EOQ
           select
