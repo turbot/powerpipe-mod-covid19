@@ -40,6 +40,41 @@ dashboard "covid-19" {
   }
 
   container {
+
+    card {
+      width = 2
+      sql   = "select to_char(max(total_vaccinations),'999G999G999G999') as \"Vaccinations: global\" from covid_data where iso_code = 'OWID_WRL';"
+    }
+
+    card {
+      width = 2
+      sql   = "select to_char(max(total_vaccinations),'999G999G999G999') as \"Vaccinations: Africa\" from covid_data where iso_code = 'OWID_AFR';"
+    }
+
+    card {
+      width = 2
+      sql   = "select to_char(max(total_vaccinations),'999G999G999G999') as \"Vaccinations: Asia\" from covid_data where iso_code = 'OWID_ASI';"
+    }
+
+    card {
+      width = 2
+      sql   = "select to_char(max(total_vaccinations),'999G999G999G999') as \"Vaccinations: North America\" from covid_data where iso_code = 'OWID_NAM';"
+    }
+
+    card {
+      width = 2
+      sql   = "select to_char(max(total_vaccinations),'999G999G999G999') as \"Vaccinations: Oceania\" from covid_data where iso_code = 'OWID_OCE';"
+    }
+
+    card {
+      width = 2
+      sql   = "select to_char(max(total_vaccinations),'999G999G999G999') as \"Vaccinations: South America\" from covid_data where iso_code = 'OWID_SAM';"
+    }
+
+  }
+
+
+  container {
     width = 12
     chart {
       title = "Global deaths by month"
