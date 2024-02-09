@@ -307,7 +307,7 @@ dashboard "covid-19" {
 
       table "columns" {
         sql   = <<EOQ
-          select column_name
+          select distinct column_name
           from information_schema.columns
           where table_name  = 'covid_data' and column_name != '_ctx'
           order by column_name

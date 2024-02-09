@@ -18,7 +18,9 @@ query "by_iso_code" {
       to_char(max(people_fully_vaccinated), '999,999,999,999') as fully_vaccinated,
       round((max(people_fully_vaccinated)::numeric / max(population)::numeric) * 100, 2) as "people fully vaccinated as % of population",
       to_char(max(total_vaccinations), '999,999,999,999') as total_vaccinations,
-      to_char(max(total_boosters), '999,999,999,999') as total_boosters
+      to_char(max(total_boosters), '999,999,999,999') as total_boosters,
+      to_char(max(median_age), '999,999,999,999') as median_age,
+      round(max(gdp_per_capita)::numeric, 2) as gdp_per_capita
     from covid_data
     where iso_code = $1
   EOQ
