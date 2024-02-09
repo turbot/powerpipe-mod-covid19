@@ -76,7 +76,7 @@ dashboard "covid-19" {
   container {
     width = 12
     chart {
-      title = "Global deaths by month"
+      title = "Deaths by month"
       type  = "column"
       sql   = <<EOQ
         with data as (
@@ -97,6 +97,61 @@ dashboard "covid-19" {
     }
 
   }
+
+/*
+  container {
+      chart {
+        type = "line"
+        sql = <<EOQ
+          SELECT * FROM (
+            VALUES
+              ('us-east-1', 'foo', 4),
+              ('us-east-2', 'foo', 3),
+              ('us-west-1', 'foo', 2),
+              ('us-west-2', 'foo', 1),
+              ('us-east-1', 'bar', 5),
+              ('us-east-2', 'bar', 6),
+              ('us-west-1', 'bar', 7),
+              ('us-west-2', 'bar', 8)
+          ) AS t(region, series_name, count);        
+        EOQ
+      }
+   }
+*/   
+
+
+  container {
+    width = 12
+    chart {
+      type = "line"
+      title = "Deaths by country, top 15 by population"
+      sql   = <<EOQ
+        with iso_codes as (
+          select iso_code, location as location, max(population) as max_pop from covid_data
+          where iso_code not in ('OWID_WRL', 'OWID_AFR', 'OWID_ASI', 'OWID_EUR', 'OWID_NAM', 'OWID_OCE', 'OWID_SAM', 'OWID_LIC', 'OWID_LMC', 'OWID_UMC', 'OWID_HIC')
+          group by iso_code, location
+          order by max_pop desc
+          limit 15
+        ),
+        monthly_deaths as (
+          select
+            iso_code,
+            to_char(date, 'YYYY-MM') as year_month,
+            sum(coalesce(new_deaths, 0)) as deaths
+          from covid_data c join iso_codes i using (iso_code)
+          group by iso_code, year_month
+        )
+        select 
+          m.year_month,
+          i.location,
+          m.deaths
+        from iso_codes i
+        join monthly_deaths m using (iso_code)
+        order by iso_code, year_month, deaths
+      EOQ
+    }
+    
+  }  
 
   container {
 
@@ -129,7 +184,7 @@ dashboard "covid-19" {
             location,
             round(sum(new_deaths)::numeric / max(population)::numeric * 100, 2) as "pct"
           from covid_data
-          where iso_code not in ('OWID_AFR', 'OWID_ASI', 'OWID_EUR', 'OWID_NAM', 'OWID_OCE', 'OWID_SAM', 'OWID_LIC', 'OWID_LMC', 'OWID_UMC', 'OWID_HIC')
+          where iso_code not in ('OWID_WRL', 'OWID_AFR', 'OWID_ASI', 'OWID_EUR', 'OWID_NAM', 'OWID_OCE', 'OWID_SAM', 'OWID_LIC', 'OWID_LMC', 'OWID_UMC', 'OWID_HIC')
           and new_deaths is not null
           group by location
           order by "pct"

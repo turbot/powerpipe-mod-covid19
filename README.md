@@ -102,6 +102,7 @@ COPY 373434
 
 ```
 create index iso_code on covid_data(iso_code);
+create index date on covid_data(date);
 ```
 
 
