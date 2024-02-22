@@ -9,7 +9,7 @@ input "continents" {
           covid_data
       )
       select
-        location || ' (' || iso_code || ')' label,
+        location || ' (' || iso_code || ')' as label,
         iso_code as value
       from
         data
@@ -50,7 +50,7 @@ input "income" {
         covid_data
     )
     select
-      location || ' (' || iso_code || ')' label,
+      location || ' (' || iso_code || ')' as label,
       iso_code as value
     from
       data
