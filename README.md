@@ -36,12 +36,10 @@ cd covid19_postgresql_powerpipe_analysis
 
 ### Configure Database
 
-Download [Our World in Data](https://ourworldindata.org/coronavirus-source-data)
-
-Move the downloaded file into the current directory:
+Download the dataset into the current directory:
 
 ```sh
-mv ~/Downloads/owid-covid-data.csv .
+curl -o owid-covid-data.csv https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv
 ```
 
 Connect to PostgreSQL:
