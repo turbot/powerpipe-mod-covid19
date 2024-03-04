@@ -1,8 +1,22 @@
-# COVID-19 Data Analysis Mod for Powerpipe
+# COVID-19 Mod for Powerpipe
 
 Analyze COVID-19 data using PostgreSQL and Powerpipe.
 
-![covid19-analysis-dashboard](https://github.com/turbot/powerpipe-mod-covid-vaccinations/assets/72413708/8ed1285f-1d65-481e-847f-8c3bd646eaac)
+![image](https://github.com/turbot/powerpipe-mod-covid19/blob/add-new-mod/docs/covid19_dashboard_screenshot.png)
+
+## Overview
+
+Dashboards can help answer questions like:
+
+- What is the global total and new cases of COVID-19?
+- How does the number of new tests compare to new cases over time globally?
+- What is the progress of global vaccination efforts over time?
+- How are ICU and hospital admissions trends evolving in the context of COVID-19?
+- What is the distribution of total cases and deaths per million by continent?
+
+## Documentation
+
+- **[Dashboards →](https://hub.powerpipe.io/mods/turbot/covid19/dashboards)**
 
 ## Installation
 
@@ -13,33 +27,37 @@ brew install turbot/tap/powerpipe
 brew install turbot/tap/postgresql
 ```
 
-## Clone the Mod Repository
+Clone:
 
 ```sh
 git clone https://github.com/turbot/-samples.git
 cd covid19_postgresql_powerpipe_analysis
 ```
 
-## Install the Dataset
+### Configure Database
 
-Download the dataset from [Our World in Data](https://ourworldindata.org/coronavirus-source-data).
+Download [Our World in Data](https://ourworldindata.org/coronavirus-source-data)
 
-## Create a PostgreSQL Database
-
-Replace `username` with your PostgreSQL username and `mydatabase` with your desired database name.
+Move the downloaded file into the current directory:
 
 ```sh
-psql -U username -d postgres
-create database mydatabase;
+mv ~/Downloads/owid-covid-data.csv .
 ```
 
-## Connect to the Database
+Connect to PostgreSQL:
 
 ```sh
-\c mydatabase
+psql -U <username> -d postgres
 ```
 
-## Create a Table
+Create and connect to a database:
+
+```sh
+create database covid19;
+\c covid19
+```
+
+Create a table:
 
 ```sh
 create table covid_data (
@@ -113,18 +131,18 @@ create table covid_data (
 );
 ```
 
-## Load the Dataset into the Table
+## Load the Dataset into the table:
 
 ```sh
-copy covid_data(iso_code, continent, location, date, total_cases, new_cases, new_cases_smoothed, total_deaths, new_deaths, new_deaths_smoothed, total_cases_per_million, new_cases_per_million, new_cases_smoothed_per_million, total_deaths_per_million, new_deaths_per_million, new_deaths_smoothed_per_million, reproduction_rate, icu_patients, icu_patients_per_million, hosp_patients, hosp_patients_per_million, weekly_icu_admissions, weekly_icu_admissions_per_million, weekly_hosp_admissions, weekly_hosp_admissions_per_million, total_tests, new_tests, total_tests_per_thousand, new_tests_per_thousand, new_tests_smoothed, new_tests_smoothed_per_thousand, positive_rate, tests_per_case, tests_units,total_vaccinations, people_vaccinated, people_fully_vaccinated, total_boosters, new_vaccinations, new_vaccinations_smoothed, total_vaccinations_per_hundred, people_vaccinated_per_hundred, people_fully_vaccinated_per_hundred, total_boosters_per_hundred, new_vaccinations_smoothed_per_million, new_people_vaccinated_smoothed, new_people_vaccinated_smoothed_per_hundred, stringency_index, population_density, median_age, aged_65_older, aged_70_older, gdp_per_capita, extreme_poverty, cardiovasc_death_rate, diabetes_prevalence, female_smokers, male_smokers, handwashing_facilities, hospital_beds_per_thousand, life_expectancy, human_development_index, population, excess_mortality_cumulative_absolute, excess_mortality_cumulative, excess_mortality, excess_mortality_cumulative_per_million) from '/path/to/your/file/CovidData.csv' DELIMITER ',' CSV HEADER ENCODING 'UTF-8';
+\copy covid_data(iso_code, continent, location, date, total_cases, new_cases, new_cases_smoothed, total_deaths, new_deaths, new_deaths_smoothed, total_cases_per_million, new_cases_per_million, new_cases_smoothed_per_million, total_deaths_per_million, new_deaths_per_million, new_deaths_smoothed_per_million, reproduction_rate, icu_patients, icu_patients_per_million, hosp_patients, hosp_patients_per_million, weekly_icu_admissions, weekly_icu_admissions_per_million, weekly_hosp_admissions, weekly_hosp_admissions_per_million, total_tests, new_tests, total_tests_per_thousand, new_tests_per_thousand, new_tests_smoothed, new_tests_smoothed_per_thousand, positive_rate, tests_per_case, tests_units,total_vaccinations, people_vaccinated, people_fully_vaccinated, total_boosters, new_vaccinations, new_vaccinations_smoothed, total_vaccinations_per_hundred, people_vaccinated_per_hundred, people_fully_vaccinated_per_hundred, total_boosters_per_hundred, new_vaccinations_smoothed_per_million, new_people_vaccinated_smoothed, new_people_vaccinated_smoothed_per_hundred, stringency_index, population_density, median_age, aged_65_older, aged_70_older, gdp_per_capita, extreme_poverty, cardiovasc_death_rate, diabetes_prevalence, female_smokers, male_smokers, handwashing_facilities, hospital_beds_per_thousand, life_expectancy, human_development_index, population, excess_mortality_cumulative_absolute, excess_mortality_cumulative, excess_mortality, excess_mortality_cumulative_per_million) from '~/owid-covid-data.csv' DELIMITER ',' CSV HEADER ENCODING 'UTF-8';
 ```
 
 ## Usage
 
-Run the dashboard and specify the DB connection string (replace `username` with your PostgreSQL username and `mydatabase` with your desired database name) :
+Run the dashboard and specify the DB connection string:
 
 ```sh
-powerpipe server --database postgres://username@localhost:5432/mydatabase
+powerpipe server --database postgres://<username>@localhost:5432/covid19
 ```
 
 ## Open Source & Contributing
@@ -140,4 +158,4 @@ This repository is published under the [Apache 2.0 license](https://www.apache.o
 Want to help but not sure where to start? Pick up one of the `help wanted` issues:
 
 - [Powerpipe](https://github.com/turbot/powerpipe/labels/help%20wanted)
-- [Covid19 Vaccinations Mod](https://github.com/turbot/powerpipe-mod-covid-vaccinations/labels/help%20wanted)
+- [Covid19 Mod](https://github.com/turbot/powerpipe-mod-covid19/labels/help%20wanted)
