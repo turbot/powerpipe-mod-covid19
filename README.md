@@ -1,6 +1,6 @@
 # COVID-19 Mod for Powerpipe
 
-Analyze COVID-19 data using PostgreSQL and Powerpipe.
+Analyze COVID-19 data from [Our World in Data](https://ourworldindata.org/coronavirus) using [PostgreSQL](https://www.postgresql.org/) and [Powerpipe](https://powerpipe.io).
 
 ![image](https://github.com/turbot/powerpipe-mod-covid19/blob/add-new-mod/docs/covid19_dashboard_screenshot.png)
 
