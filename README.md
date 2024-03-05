@@ -38,7 +38,7 @@ powerpipe mod install github.com/turbot/powerpipe-mod-covid19
 
 ### Configure Database
 
-Download the dataset into the current directory:
+Download the dataset into the dashboards directory:
 
 ```sh
 curl -o owid-covid-data.csv https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv
