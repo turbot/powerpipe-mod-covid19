@@ -27,7 +27,7 @@ brew install turbot/tap/powerpipe
 brew install turbot/tap/postgresql
 ```
 
-Install the mod::
+Install the mod:
 
 ```sh
 mkdir dashboards
