@@ -27,11 +27,13 @@ brew install turbot/tap/powerpipe
 brew install turbot/tap/postgresql
 ```
 
-Clone:
+Install the mod::
 
 ```sh
-git clone https://github.com/turbot/-samples.git
-cd covid19_postgresql_powerpipe_analysis
+mkdir dashboards
+cd dashboards
+powerpipe mod init
+powerpipe mod install github.com/turbot/powerpipe-mod-covid19
 ```
 
 ### Configure Database
