@@ -4,7 +4,6 @@ mod "covid19" {
   documentation = file("./docs/index.md")
   color         = "#72A945"
   icon          = "/images/mods/turbot/covid19-insights.svg"
-  documentation = file("./README.md")
   categories    = ["dashboard", "postgres"]
 
   opengraph {
