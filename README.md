@@ -2,7 +2,7 @@
 
 View dashboards to analyze [COVID-19](https://ourworldindata.org/coronavirus) vaccinations, healthcare capacity, regional trends, and more.
 
-![image](https://github.com/turbot/powerpipe-mod-covid19/blob/main/docs/covid19_dashboard_screenshot.png)
+![image](https://raw.githubusercontent.com/turbot/powerpipe-mod-covid19/main/docs/covid19_dashboard_screenshot.png)
 
 ## Overview
 
