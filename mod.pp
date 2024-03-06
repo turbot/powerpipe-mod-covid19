@@ -1,6 +1,7 @@
 mod "covid19" {
   title         = "Covid19"
   description   = "Visualize COVID-19 vaccinations, healthcare capacity, regional trends, and more using Powerpipe and PostgreSQL."
+  documentation = file("./docs/index.md")
   color         = "#72A945"
   icon          = "/images/mods/turbot/covid19.svg"
   documentation = file("./README.md")

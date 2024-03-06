@@ -8,7 +8,7 @@ View dashboards to analyze [COVID-19](https://ourworldindata.org/coronavirus) va
 
 Dashboards can help answer questions like:
 
-- What is the total number of new cases of COVID-19?
+- What is the total number of new COVID-19 cases?
 - How does the number of new tests compare to new cases over time globally?
 - What is the progress of global vaccination efforts over time?
 - How are ICU and hospital admissions trends evolving in the context of COVID-19?
