@@ -3,4 +3,4 @@
 _What's new?_
 
 - New dashboard:
-  - COVID-19 Dashboard. ([#2](https://github.com/turbot/powerpipe-mod-covid19/pull/2))
+  - [COVID-19 Dashboard](https://hub.powerpipe.io/mods/turbot/powerpipe-mod-covid19/dashboard.covid19)
