@@ -1,18 +1,8 @@
-# COVID-19 Mod for Powerpipe
+# COVID-19 Mod
 
 View dashboards to analyze [COVID-19](https://ourworldindata.org/coronavirus) vaccinations, healthcare capacity, regional trends, and more.
 
-![image](https://raw.githubusercontent.com/turbot/powerpipe-mod-covid19/main/docs/covid19_dashboard_screenshot.png)
-
-## Overview
-
-Dashboards can help answer questions like:
-
-- What is the global total and new cases of COVID-19?
-- How does the number of new tests compare to new cases over time globally?
-- What is the progress of global vaccination efforts over time?
-- How are ICU and hospital admissions trends evolving in the context of COVID-19?
-- What is the distribution of total cases and deaths per million by continent?
+<img src="https://raw.githubusercontent.com/turbot/powerpipe-mod-covid19/main/docs/covid19_dashboard_screenshot.png" width="50%" type="thumbnail"/>
 
 ## Documentation
 
